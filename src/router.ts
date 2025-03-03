@@ -10,7 +10,8 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
     {
-    path: '/extractText',
+    // path: '/extractText',
+    path: '/',
     component: () => import("./views/ExtractText/index.vue"),
     props: true,
     beforeEnter: (to, from) => {
