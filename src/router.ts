@@ -1,4 +1,4 @@
-import { createRouter,type RouteRecordRaw,createWebHistory } from "vue-router";
+import { createRouter,type RouteRecordRaw,createWebHistory,type RouteLocationNormalized } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/compressPhoto',
@@ -14,10 +14,9 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     component: () => import("./views/ExtractText/index.vue"),
     props: true,
-    beforeEnter: (to, from) => {
-      // console.log("⭐ ~ 当前打印的内容 ~ :",to,from );  
-      return true;
-    },
+    meta: {
+      title:'图片文字识别'
+    }
   }
 ]
 const ErrorRoutes: Array<RouteRecordRaw> = [
@@ -32,9 +31,14 @@ const router = createRouter({
   routes:[...routes,...ErrorRoutes]
 })
 
-router.beforeEach((to, from) => {
-  // console.log("⭐ ~ 当前打印的内容 ~ :",to,from );  
+router.beforeEach((to, from):boolean => {
+  setPageTitle(to);
   return true;
 })
+
+const setPageTitle = (to:any) => {
+  let title = to.meta.title || "";
+  document.title = title;
+}
 
 export default router;
