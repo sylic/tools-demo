@@ -1,15 +1,26 @@
 <template>
   <div class="extract-box flex-row rounded-lg">
     <div class="flex-item file-uploader-box">
-      <file-upload />
+      <file-upload ref="fileUplader">
+        <template v-slot:customOpt="{btnDisable}">
+          <el-button :disabled="btnDisable"  type="primary" class="mt-8 w-32" @click="recognizeText">识别文字</el-button>
+        </template>
+      </file-upload>
     </div>
     <div class="flex-item recognize-box"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { } from "vue";
-import FileUploader from "@/components/FileUpload/index.vue"
+import {ref} from "vue";
+import FileUploader from "@/components/FileUpload/index.vue";
+import { createWorker } from "tesseract.js";
+
+const fileUplader = ref();
+// 识别文字
+const recognizeText = () => {
+  if (!fileUplader.value.selectedFile) return;
+}
 </script>
 
 <style scoped>
