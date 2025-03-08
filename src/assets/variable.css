@@ -1,0 +1,6 @@
+:root{
+  --border-radius:6px
+}
+.file-uploader{
+  --image-preview-border:1px dashed #cdd0d6
+}

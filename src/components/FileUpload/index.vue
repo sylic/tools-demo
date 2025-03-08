@@ -3,10 +3,14 @@
     <el-upload
       class="upload-demo"
       drag
-      :auto-uploa="false"
-      accept="jpg|jpeg|png"
-      action="#"
+      :auto-upload="false"
+      accept=".jpg,.png,.jpeg"
       :multiple="false"
+      :before-upload="beforeUpload"
+      :on-success="handleUploadSuccess"
+      :show-file-list="false"
+      :on-change="handleFileChange"
+      action="#"
     >
       <div class="drag-image"></div>
       <div class="el-upload__text text-gray-500">
@@ -18,23 +22,59 @@
           支持的文件类型：.jpg、.jpeg、.png。
       </div>
     </el-upload>
+    <div class="pic-preview" >
+      <el-image class="img-preview" :src="picPreviewSrc" alt="请先选择图片" :preview-src-list="[picPreviewSrc]" fit="cover" />
+    </div>
+    <slot name="customOpt" :btnDisable="!selectedFile"></slot>
   </div>
 </template>
 
 <script setup lang="ts">
+import {onBeforeUnmount, ref} from "vue"
 import { DocumentCopy } from '@element-plus/icons-vue';
+import type { UploadProps,UploadFile } from 'element-plus';
+import { fileReader,revokeUrl} from "@/utils/index";
 
+const selectedFile = ref <UploadFile|File>();
 // 读取剪切板
 const getCopyImageData = ()=>{
   console.log("getCopyImageData");
 }
+// 上传之前的回调
+const beforeUpload:UploadProps['beforeUpload'] = (e) => {
+  return true;
+}
+
+// 上传成功
+const handleUploadSuccess: UploadProps['onSuccess'] = (e) => {
+}
+
+
+const picPreviewSrc=ref('')
+// 上传改变
+const handleFileChange:UploadProps['onChange'] = (e) => {
+  if (!e) return;
+  selectedFile.value = e;
+  // console.log(selectedFile.value);
+  fileReader(e).then((res: string) => {
+    picPreviewSrc.value = res;
+  })
+}
+
+onBeforeUnmount(() => {
+  // 销毁图片临时链接
+  revokeUrl(picPreviewSrc.value)
+})
+
+defineExpose({
+  selectedFile
+})
 </script>
 
 <style scoped>
-
 .file-uploader{
   width: 100%;
-  height: 50%;
+  height: 60%;
 }
 .file-uploader:deep(.el-upload-dragger){
   border: none;
@@ -54,5 +94,19 @@ const getCopyImageData = ()=>{
   width: 150px;
   height: 80px;
   margin: auto;
+}
+
+.pic-preview{
+  border: var(--image-preview-border);
+  width: 150px;
+  height: 120px;
+  border-radius: var(--border-radius);
+  background-color: var(--el-fill-color-lighter);
+  margin: auto;
+}
+.img-preview{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 </style>
