@@ -32,4 +32,7 @@ import FileUploader from "@/components/FileUpload/index.vue"
   overflow-y: scroll;
   border-left: 1px solid #EEEDEB;
 }
+.recognize-box::-webkit-scrollbar {
+    display: none;
+  }
 </style>
