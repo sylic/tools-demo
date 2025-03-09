@@ -1,5 +1,6 @@
 :root{
-  --border-radius:6px
+  --border-radius:6px;
+  --bg-color-grey:#cdd0d6;
 }
 .file-uploader{
   --image-preview-border:1px dashed #cdd0d6

@@ -19,11 +19,17 @@
       <el-button type="primary" class="mt-3 w-32">选择图片</el-button><br>
       <el-button @click.stop="getCopyImageData" plain :icon="DocumentCopy" class="mt-3 w-32">从剪贴板中粘贴</el-button>
       <div class="el-upload__tip">
-          支持的文件类型：.jpg、.jpeg、.png。
+          支持的文件类型：.jpg、.jpeg、.png
       </div>
     </el-upload>
     <div class="pic-preview" >
-      <el-image class="img-preview" :src="picPreviewSrc" alt="请先选择图片" :preview-src-list="[picPreviewSrc]" fit="cover" />
+      <el-image class="img-preview" :src="picPreviewSrc" alt="请先选择图片" :preview-src-list="[picPreviewSrc]" fit="cover" >
+        <template #error>
+          <div class="error-prompt">
+            请先选择图片
+          </div>
+        </template>
+      </el-image>
     </div>
     <slot name="customOpt" :btnDisable="!selectedFile"></slot>
   </div>
@@ -107,6 +113,13 @@ defineExpose({
 .img-preview{
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .error-prompt{
+    text-align: center;
+    font-size: 14px;
+  }
 }
 </style>
