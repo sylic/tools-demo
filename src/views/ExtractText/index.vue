@@ -8,17 +8,20 @@
       </file-upload>
     </div>
     <div class="flex-item recognize-box rounded-lg">
+      <div class="tool-box">
+        <copy-tool @handleCopy="copyText"/>
+      </div>
       <div class="content">
         {{ recognizeRes}}
       </div>
-      
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {ref,onMounted} from "vue";
 import FileUploader from "@/components/FileUpload/index.vue";
+import CopyTool from "@/components/CopyTool/index.vue"
 import { createWorker } from "tesseract.js";
 
 const fileUplader = ref();
@@ -43,8 +46,33 @@ const recognizeText = () => {
 }
 // 打字机输出文字
 const typeRes = (txt) => {
-  
- }
+  recognizeRes.value = txt;
+}
+
+// 复制
+const copyText = () => {
+  let text = recognizeRes.value;
+  if (navigator.clipboard) {
+        // clipboard api 复制
+        navigator.clipboard.writeText(text);
+  }
+  else {
+    const textarea = document.createElement('textarea');
+    document.body.appendChild(textarea);
+    // 隐藏此输入框
+    textarea.style.position = 'fixed';
+    textarea.style.clip = 'rect(0 0 0 0)';
+    textarea.style.top = '10px';
+    // 赋值
+    textarea.value = text;
+    // 选中
+    textarea.select();
+    // 复制
+    document.execCommand('copy', true);
+    // 移除输入框
+    document.body.removeChild(textarea);
+}
+}
 </script>
 
 <style scoped>
@@ -64,11 +92,21 @@ const typeRes = (txt) => {
   padding:32px 0;
 }
 .recognize-box{
-  overflow-y: scroll;
   border-left: 1px solid #EEEDEB;
   background-color: var(--el-fill-color-lighter);
+  position: relative;
 }
-.recognize-box::-webkit-scrollbar {
+.content::-webkit-scrollbar {
     display: none;
   }
+.content{
+  padding:0 10px 10px;
+  height: calc(100% - 40px);
+  overflow-y: scroll;
+}
+.tool-box{
+  height: 40px;
+  width: 100%;
+  border-bottom: 1px solid #9D84B7;
+}
 </style>
