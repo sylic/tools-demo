@@ -7,8 +7,8 @@
         </template>
       </file-upload>
     </div>
-    <div class="flex-item recognize-box rounded-lg">
-      <div class="tool-box">
+    <div class="flex-item recognize-box">
+      <div class="tool-box rounded-tl-lg rounded-tr-lg">
         <copy-tool @handleCopy="copyText"/>
       </div>
       <div class="content">
@@ -79,7 +79,6 @@ const copyText = () => {
 .extract-box{
   width: 80%;
   height: 60vh;
-  
   display: flex;
   border: 1px solid #EEEDEB;
   margin:50px auto;
@@ -93,7 +92,7 @@ const copyText = () => {
 }
 .recognize-box{
   border-left: 1px solid #EEEDEB;
-  background-color: var(--el-fill-color-lighter);
+  border-top: none;
   position: relative;
 }
 .content::-webkit-scrollbar {
@@ -107,6 +106,7 @@ const copyText = () => {
 .tool-box{
   height: 40px;
   width: 100%;
-  border-bottom: 1px solid #9D84B7;
+  background-color: #98D8EF;
+  line-height: 40px;
 }
 </style>

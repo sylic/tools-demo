@@ -17,10 +17,9 @@ const handleClick = () => {
 
 <style scoped>
 .copy-tool{
-  /* height: 100%; */
   position: absolute;
   right: 15px;
-  top: 10px;
+  top: 0px;
 }
 .copy{
   width: 30px;
@@ -28,6 +27,7 @@ const handleClick = () => {
   border-radius: 15px;
   line-height: 15px;
   transition: all 0.2s ease-in;
+  color: white;
 }
 .copy:hover{
   cursor: pointer;
