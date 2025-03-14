@@ -11,7 +11,7 @@
       <div class="tool-box rounded-tl-lg rounded-tr-lg">
         <copy-tool @handleCopy="copyText"/>
       </div>
-      <div class="content">
+      <div class="content" :class="{ 'loading-text': isRecognizing }">
         {{ recognizeRes}}
       </div>
     </div>
@@ -39,7 +39,7 @@ const recognizeText = () => {
       }
     }
   });
-  const ret = await ORCWorker.recognize(fileUplader.value.selectedFile.raw);
+  const ret = await ORCWorker.recognize(fileUplader.value.selectedFile);
   await ORCWorker.terminate();
   typeRes(ret.data.text)
 })();
@@ -99,14 +99,18 @@ const copyText = () => {
     display: none;
   }
 .content{
-  padding:0 10px 10px;
+  padding:5px 5px 10px;
   height: calc(100% - 40px);
   overflow-y: scroll;
+  text-align: left;
 }
 .tool-box{
   height: 40px;
   width: 100%;
   background-color: #98D8EF;
   line-height: 40px;
+}
+.loading-text{
+  
 }
 </style>

@@ -39,12 +39,18 @@
 import {onBeforeUnmount, ref} from "vue"
 import { DocumentCopy } from '@element-plus/icons-vue';
 import type { UploadProps,UploadFile } from 'element-plus';
-import { fileReader,revokeUrl} from "@/utils/index";
+import { fileReader, revokeUrl } from "@/utils/index.ts";
+import { useClipBoard } from "./useClipboard"
 
 const selectedFile = ref <UploadFile|File>();
-// 读取剪切板
-const getCopyImageData = ()=>{
-  console.log("getCopyImageData");
+// 读取剪切板的图片
+const getCopyImageData = async() => {
+  let file = await useClipBoard();// 拿到file对象
+  selectedFile.value = file;
+  fileReader(file).then((res: string) => {
+    picPreviewSrc.value = res;
+  })
+
 }
 // 上传之前的回调
 const beforeUpload:UploadProps['beforeUpload'] = (e) => {
@@ -60,8 +66,7 @@ const picPreviewSrc=ref('')
 // 上传改变
 const handleFileChange:UploadProps['onChange'] = (e) => {
   if (!e) return;
-  selectedFile.value = e;
-  // console.log(selectedFile.value);
+  selectedFile.value = e.raw;
   fileReader(e).then((res: string) => {
     picPreviewSrc.value = res;
   })
@@ -113,7 +118,7 @@ defineExpose({
 .img-preview{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit:contain;
   display: flex;
   align-items: center;
   justify-content: center;
