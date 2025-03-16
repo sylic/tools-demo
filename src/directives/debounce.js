@@ -4,14 +4,17 @@ export default {
     if (typeof binding.value !== "function") return;
     const delayTime = Number(binding.arg) || 800; // 点击的时间控制
     el.timer = null;
+    el.flag = true;
     el.handler = function (...args) {
+      // 立即执行一次
+      el.flag && binding.value.apply(this, args);
+      el.flag = false;
       if (el.timer) {
         clearTimeout(el.timer);
         el.timer = null;
       }
       el.timer = setTimeout(() => {
-        // 改变this指向并执行
-        binding.value.apply(this, args);
+        el.flag = true;
         el.timer = null;
       }, delayTime);
     };

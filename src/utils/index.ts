@@ -2,7 +2,9 @@
 export const  fileReader = (file:any) => {
   return new Promise((resolve, reject) => {
     let URL = window.URL || window.webkitURL;
-    let imgURL = URL.createObjectURL(file.raw || file);
+    console.log(file);
+    let fileTemp = file ? file : file.raw;
+    let imgURL = URL.createObjectURL(fileTemp);
     resolve(imgURL);
 
     // 生成的是img图片
