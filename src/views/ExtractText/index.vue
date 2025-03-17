@@ -3,15 +3,17 @@
     <div class="flex-item file-uploader-box">
       <file-upload ref="fileUplader">
         <template v-slot:customOpt="{btnDisable}">
-          <el-button :disabled="btnDisable"  type="primary" class="mt-8 w-32" @click="recognizeText">识别文字</el-button>
+          <el-button :disabled="btnDisable"  type="primary" class="mt-8 w-32" @click="recognizeText" circle size="large" :icon="Right"></el-button>
         </template>
       </file-upload>
     </div>
     <div class="flex-item recognize-box">
       <div class="tool-box rounded-tl-lg rounded-tr-lg">
+        <div class="tool-icon flex-row" @click="reset"><el-icon><RefreshRight /></el-icon></div>
         <copy-tool @handleCopy="copyText"/>
       </div>
-      <div class="content" :class="{ 'loading-text': isRecognizing }">
+      <div class="content">
+        <loading ref="loadingRef"></loading>
         {{ recognizeRes}}
       </div>
     </div>
@@ -23,19 +25,23 @@ import {ref,onMounted} from "vue";
 import FileUploader from "@/components/FileUpload/index.vue";
 import CopyTool from "@/components/CopyTool/index.vue"
 import { createWorker } from "tesseract.js";
-
+import Loading from "@/components/Loading/index.vue"
+import {
+  Right,RefreshRight
+} from '@element-plus/icons-vue'
 const fileUplader = ref();
-const isRecognizing = ref(false);// 识别状态
 const recognizeRes = ref("");// 识别的结果
+
+const loadingRef = ref(null);
 // 识别文字
 const recognizeText = () => {
   if (!fileUplader.value.selectedFile) return;
   (async () => {
-    isRecognizing.value = true;
+    loadingRef.value.changeStatus(true);
   let ORCWorker = await createWorker(['eng', 'chi_sim'], 1, {
     logger: m => {
       if (m.status == 'recognizing text' && m.progress == 1) {
-        isRecognizing.value = false;
+         loadingRef.value.changeStatus(false);
       }
     }
   });
@@ -73,6 +79,12 @@ const copyText = () => {
     document.body.removeChild(textarea);
 }
 }
+
+// 重置
+const reset = () => {
+  recognizeRes.value = '';
+  fileUplader.value.clearUpload();
+}
 </script>
 
 <style scoped>
@@ -107,10 +119,9 @@ const copyText = () => {
 .tool-box{
   height: 40px;
   width: 100%;
-  background-color: #98D8EF;
-  line-height: 40px;
-}
-.loading-text{
-  
+  background-color: var(--el-color-primary-light-5);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 </style>

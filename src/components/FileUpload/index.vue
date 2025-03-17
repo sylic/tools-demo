@@ -2,6 +2,7 @@
   <div class="file-uploader text-gray-500">
     <el-upload
       class="upload-demo"
+      ref="fileUploadRef"
       drag
       :auto-upload="false"
       accept=".jpg,.png,.jpeg"
@@ -19,7 +20,7 @@
       <el-button type="primary" class="mt-3 w-32">选择图片</el-button><br>
       <el-button @click.stop="getCopyImageData" plain :icon="DocumentCopy" class="mt-3 w-32">从剪贴板中粘贴</el-button>
       <div class="el-upload__tip">
-          支持的文件类型：.jpg、.jpeg、.png
+          支持的文件类型：jpg、jpeg、png
       </div>
     </el-upload>
     <div class="pic-preview" >
@@ -72,13 +73,21 @@ const handleFileChange:UploadProps['onChange'] = (e) => {
   })
 }
 
+const fileUploadRef = ref();
+// 清空上传的图片
+const clearUpload = () => {
+  fileUploadRef.value.clearFiles();
+  picPreviewSrc.value = '';
+  revokeUrl(picPreviewSrc.value)
+}
 onBeforeUnmount(() => {
   // 销毁图片临时链接
   revokeUrl(picPreviewSrc.value)
 })
 
 defineExpose({
-  selectedFile
+  selectedFile,
+  clearUpload
 })
 </script>
 
@@ -86,6 +95,7 @@ defineExpose({
 .file-uploader{
   width: 100%;
   height: 60%;
+  user-select: none;
 }
 .file-uploader:deep(.el-upload-dragger){
   border: none;

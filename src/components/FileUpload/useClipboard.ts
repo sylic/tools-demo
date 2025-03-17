@@ -4,7 +4,7 @@ export const useClipBoard = async ():Promise<any> => {
     const clipboard = await navigator.clipboard.read();
     for (const clipboardItem of clipboard) {
       if (clipboardItem.types.length == 0) {
-        messageFun('剪切板内没有内容！', 'warning');
+        messageFun('剪贴板内没有内容！', 'warning');
         return Promise.reject(null); 
        }
        for (const type of clipboardItem.types) {
@@ -29,7 +29,7 @@ export const useClipBoard = async ():Promise<any> => {
 
 const handleErrorMsg = (err: string) => {
   if (err && err.includes("Read permission denied")) {
-    messageFun('需要先同意网站读取剪切板的权限~','warning')
+    messageFun('需要先同意网站读取剪贴板的权限~','warning')
   }
 }
 

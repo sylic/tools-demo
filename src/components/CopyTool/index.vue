@@ -63,21 +63,18 @@ const handleClick = () => {
 
 <style scoped>
 .container {
-  position: absolute;
+  /* position: absolute;
   right: 15px;
-  top: 0px;
+  top: 0px; */
   width: 40px;
   height: 40px;
-  line-height: 40px;
 }
 
 .copy-btn {
-  border: none;
-  height: 100%;
-  width: 100%;
-  line-height: 40px;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
   background: transparent;
-  border-radius: 4px;
   cursor: pointer;
 }
 
