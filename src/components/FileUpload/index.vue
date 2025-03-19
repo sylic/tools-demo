@@ -54,12 +54,12 @@ const getCopyImageData = async() => {
 
 }
 // 上传之前的回调
-const beforeUpload:UploadProps['beforeUpload'] = (e) => {
+const beforeUpload:UploadProps['beforeUpload'] = () => {
   return true;
 }
 
 // 上传成功
-const handleUploadSuccess: UploadProps['onSuccess'] = (e) => {
+const handleUploadSuccess: UploadProps['onSuccess'] = () => {
 }
 
 

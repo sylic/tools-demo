@@ -8,3 +8,6 @@ declare module "*.vue"{
   };
   export default component;
 }
+
+declare module '*.ts';
+declare module '*.js';

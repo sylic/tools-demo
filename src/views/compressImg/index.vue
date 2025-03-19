@@ -21,7 +21,7 @@
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {compressImage}  from "./hooks"
-import type { UploadProps, UploadUserFile,UploadRawFile} from 'element-plus'
+import type { UploadProps, UploadUserFile} from 'element-plus'
 
 const fileList = ref<UploadUserFile[]>([
 
@@ -29,10 +29,6 @@ const fileList = ref<UploadUserFile[]>([
 
 const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
   console.log(file, uploadFiles)
-}
-
-const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
-  console.log(uploadFile)
 }
 
 const handleExceed: UploadProps['onExceed'] = (files, uploadFiles) => {
@@ -44,7 +40,7 @@ const handleExceed: UploadProps['onExceed'] = (files, uploadFiles) => {
 }
 // 压缩后的图片路径
 let compressedImgSrc=ref('')
-const handleUploadChange = async (file:UploadUserFile)=>{
+const handleUploadChange:UploadProps['onChange']  = async (file:any)=>{
   if(!file) return;
   let originSize = file.size / 1000;
   console.log(`压缩前图片大小：${originSize}kb`);
@@ -59,7 +55,7 @@ const handleUploadChange = async (file:UploadUserFile)=>{
   }
 }
 
-const beforeRemove: UploadProps['beforeRemove'] = (uploadFile, uploadFiles) => {
+const beforeRemove: UploadProps['beforeRemove'] = (uploadFile) => {
   return ElMessageBox.confirm(
     `Cancel the transfer of ${uploadFile.name} ?`
   ).then(

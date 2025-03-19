@@ -1,17 +1,15 @@
-import { createRouter,type RouteRecordRaw,createWebHistory,type RouteLocationNormalized } from "vue-router";
+import { createRouter,type RouteRecordRaw,createWebHistory } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/compressPhoto',
     component: () => import("./views/compressImg/index.vue"),
     props: true,
-    beforeEnter: (to, from) => {
-      // console.log("⭐ ~ 当前打印的内容 ~ :",to,from );  
-      return true;
-    },
+    // beforeEnter: (to, from) => {
+    //   return true;
+    // },
   },
     {
-    // path: '/extractText',
-    path: '/',
+    path: '/extractText',
     component: () => import("./views/ExtractText/index.vue"),
     props: true,
     meta: {
@@ -31,7 +29,7 @@ const router = createRouter({
   routes:[...routes,...ErrorRoutes]
 })
 
-router.beforeEach((to, from):boolean => {
+router.beforeEach((to):boolean => {
   setPageTitle(to);
   return true;
 })

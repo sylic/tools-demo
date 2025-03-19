@@ -1,6 +1,6 @@
 // 将Fild对象读成文件流
 export const  fileReader = (file:any) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let URL = window.URL || window.webkitURL;
     console.log(file);
     let fileTemp = file ? file : file.raw;
