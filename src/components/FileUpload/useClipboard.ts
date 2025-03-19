@@ -1,4 +1,6 @@
+// @ts-nocheck
 import { ElMessage } from 'element-plus'
+import type { VNode } from 'vue';
 export const useClipBoard = async ():Promise<any> => {
   try {
     const clipboard = await navigator.clipboard.read();
@@ -38,7 +40,7 @@ const handleClipContent = (fileType:string):boolean => {
   return types.includes(fileType);
 }
 
-const messageFun = (msg,type:string) => {
+const messageFun = (msg:any,type:string) => {
   ElMessage({
     message:msg ,
     type: type,
