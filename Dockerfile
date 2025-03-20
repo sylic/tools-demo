@@ -24,7 +24,7 @@ WORKDIR /usr/share/nginx/html/
 
 # 将当前目录下的所有文件复制到工作目录
 COPY --from=builder /app/dist   /usr/share/nginx/html/
-# COPY default.conf /etc/nginx/conf.d/default.conf
+COPY default.conf /etc/nginx/conf.d/default.conf
 
 
 

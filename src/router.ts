@@ -25,7 +25,7 @@ const ErrorRoutes: Array<RouteRecordRaw> = [
   }
 ]
 const router = createRouter({
-  history: createWebHistory('/tools'),
+  history: createWebHistory(),
   routes:[...routes,...ErrorRoutes]
 })
 
