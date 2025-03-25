@@ -68,7 +68,7 @@ const picPreviewSrc=ref('')
 const handleFileChange:UploadProps['onChange'] = (e) => {
   if (!e) return;
   selectedFile.value = e.raw;
-  fileReader(e).then((res: string) => {
+  fileReader(e.raw).then((res: string) => {
     picPreviewSrc.value = res;
   })
 }

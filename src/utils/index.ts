@@ -1,9 +1,9 @@
 // 将Fild对象读成文件流
-export const  fileReader = (file:any) => {
+export const  fileReader = (file:File) => {
   return new Promise((resolve) => {
     let URL = window.URL || window.webkitURL;
-    let fileTemp = file.raw? file.raw : file;
-    let imgURL =URL.createObjectURL(fileTemp);
+    console.log(file);
+    let imgURL =URL.createObjectURL(file);
     resolve(imgURL);
 	})
 }
