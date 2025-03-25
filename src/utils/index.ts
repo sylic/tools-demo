@@ -2,27 +2,9 @@
 export const  fileReader = (file:any) => {
   return new Promise((resolve) => {
     let URL = window.URL || window.webkitURL;
-    console.log(file);
-    let fileTemp = file ? file : file.raw;
-    let imgURL = URL.createObjectURL(fileTemp);
+    let fileTemp = file.raw? file.raw : file;
+    let imgURL =URL.createObjectURL(fileTemp);
     resolve(imgURL);
-
-    // 生成的是img图片
-    // const img = new Image()
-    // const reader = new FileReader()
-    // reader.onload = function (e) {
-    //   img.src = e.target!.result as string
-    // }
-    // reader.onerror = function (e) {
-    //   reject(e)
-    // }
-    // reader.readAsDataURL(file.raw)
-    // img.onload = function () {
-    //   resolve(img)
-    // }
-    // img.onerror = function (e) {
-    //   reject(e)
-    // }
 	})
 }
 
