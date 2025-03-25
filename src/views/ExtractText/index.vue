@@ -36,6 +36,7 @@ const loadingRef = ref(null);
 // 识别文字
 const recognizeText = () => {
   if (!fileUplader.value.selectedFile) return;
+  recognizeRes.value = '';
   (async () => {
     loadingRef.value.changeStatus(true);
   let ORCWorker = await createWorker(['eng', 'chi_sim'], 1, {
