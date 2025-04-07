@@ -26,7 +26,9 @@ WORKDIR /usr/share/nginx/html/
 COPY --from=builder /app/dist   /usr/share/nginx/html/
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-
+#复制 SSL 证书
+COPY /home/lilistar/certs/lilistar.top/lilistar.top.cer /etc/nginx/ssl/server.crt
+COPY /home/lilistar/certs/lilistar.top/lilistar.top.key /etc/nginx/ssl/server.key
 
 # 暴露应用程序监听的端口
 EXPOSE 5173
